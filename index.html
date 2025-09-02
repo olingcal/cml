@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TabPro - 新一代平板电脑</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#FF7D00',
+                        dark: '#1D2129',
+                        light: '#F2F3F5'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+    </style>
+    
+    <style>
+        /* 基础动画效果 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 产品图片悬停效果 */
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 渐变背景 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #165DFF 0%, #36CFC9 100%);
+        }
+        
+        /* 加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-dark">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- 品牌Logo -->
+                <a href="#" class="flex items-center space-x-2">
+                    <span class="text-primary text-2xl"><i class="fa fa-tablet"></i></span>
+                    <span class="text-xl font-bold text-dark">TabPro</span>
+                </a>
+                
+                <!-- 桌面端导航菜单 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-700 hover:text-primary transition-custom">特性</a>
+                    <a href="#models" class="text-gray-700 hover:text-primary transition-custom">型号</a>
+                    <a href="#specs" class="text-gray-700 hover:text-primary transition-custom">规格</a>
+                    <a href="#reviews" class="text-gray-700 hover:text-primary transition-custom">评价</a>
+                    <a href="#faq" class="text-gray-700 hover:text-primary transition-custom">常见问题</a>
+                </nav>
+                
+                <!-- 购买按钮 -->
+                <a href="#buy" class="hidden md:inline-block bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-full transition-custom shadow-md hover:shadow-lg">
+                    立即购买
+                </a>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#features" class="block text-gray-700 hover:text-primary py-2 transition-custom">特性</a>
+                <a href="#models" class="block text-gray-700 hover:text-primary py-2 transition-custom">型号</a>
+                <a href="#specs" class="block text-gray-700 hover:text-primary py-2 transition-custom">规格</a>
+                <a href="#reviews" class="block text-gray-700 hover:text-primary py-2 transition-custom">评价</a>
+                <a href="#faq" class="block text-gray-700 hover:text-primary py-2 transition-custom">常见问题</a>
+                <a href="#buy" class="block bg-primary text-white text-center font-medium py-2 px-4 rounded-full transition-custom">
+                    立即购买
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 英雄区域 -->
+        <section class="pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <!-- 文本内容 -->
+                    <div class="w-full lg:w-1/2 mb-10 lg:mb-0 animate-fade-in" style="animation-delay: 0.1s">
+                        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark mb-6">
+                            重新定义<br><span class="text-primary">平板体验</span>
+                        </h1>
+                        <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                            TabPro 搭载最新处理器，拥有超高清显示屏和长效电池，无论是工作、学习还是娱乐，都能带给你卓越体验。
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#buy" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full transition-custom shadow-lg hover:shadow-xl text-center">
+                                立即购买
+                            </a>
+                            <a href="#specs" class="bg-white border border-gray-300 hover:border-primary text-gray-700 hover:text-primary font-medium py-3 px-8 rounded-full transition-custom text-center">
+                                查看详情
+                            </a>
+                        </div>
+                        <div class="mt-8 flex items-center text-gray-500">
+                            <i class="fa fa-check-circle text-primary mr-2"></i>
+                            <span>免费送货 | 两年质保 | 30天无理由退换</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 产品图片 -->
+                    <div class="w-full lg:w-1/2 animate-fade-in" style="animation-delay: 0.3s">
+                        <div class="relative">
+                            <img src="https://picsum.photos/id/1/600/600" alt="TabPro 平板电脑正面展示" class="w-full max-w-md mx-auto rounded-3xl shadow-2xl">
+                            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg hidden md:block">
+                                <div class="flex items-center">
+                                    <i class="fa fa-bolt text-accent text-2xl mr-3"></i>
+                                    <div>
+                                        <p class="font-bold">超长续航</p>
+                                        <p class="text-sm text-gray-500">18小时连续使用</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-lg hidden md:block">
+                                <div class="flex items-center">
+                                    <i class="fa fa-microchip text-primary text-2xl mr-3"></i>
+                                    <div>
+                                        <p class="font-bold">超强性能</p>
+                                        <p class="text-sm text-gray-500">最新八核处理器</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 品牌信任 -->
+                <div class="mt-20 text-center">
+                    <p class="text-gray-500 mb-6">全球超过2000万用户的选择</p>
+                    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                        <div class="text-gray-400 text-2xl font-bold">Google</div>
+                        <div class="text-gray-400 text-2xl font-bold">Microsoft</div>
+                        <div class="text-gray-400 text-2xl font-bold">Amazon</div>
+                        <div class="text-gray-400 text-2xl font-bold">Netflix</div>
+                        <div class="text-gray-400 text-2xl font-bold">Adobe</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 特性介绍 -->
+        <section id="features" class="py-16 md:py-24 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">为什么选择 TabPro？</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们精心打造每一个细节，只为给你带来无与伦比的平板体验</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 特性卡片1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-display text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">超高清显示屏</h3>
+                        <p class="text-gray-600">11英寸 Liquid 视网膜显示屏，2560x1600分辨率，支持120Hz刷新率，色彩精准还原。</p>
+                    </div>
+                    
+                    <!-- 特性卡片2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-battery-full text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">长效电池</h3>
+                        <p class="text-gray-600">内置8000mAh大容量电池，18小时连续使用，支持30W快充，30分钟可充至50%。</p>
+                    </div>
+                    
+                    <!-- 特性卡片3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-microchip text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">强劲性能</h3>
+                        <p class="text-gray-600">最新一代八核处理器，搭配6GB/8GB内存，轻松运行多任务，流畅处理大型应用。</p>
+                    </div>
+                    
+                    <!-- 特性卡片4 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-camera text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">专业级相机</h3>
+                        <p class="text-gray-600">后置1300万像素主摄，前置800万像素摄像头，支持4K视频录制，满足创作需求。</p>
+                    </div>
+                    
+                    <!-- 特性卡片5 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-wifi text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">高速连接</h3>
+                        <p class="text-gray-600">支持Wi-Fi 6和5G网络，无论何时何地，都能享受极速网络体验，视频会议不卡顿。</p>
+                    </div>
+                    
+                    <!-- 特性卡片6 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-custom">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa fa-pencil text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">精准触控笔</h3>
+                        <p class="text-gray-600">支持压感触控笔，4096级压力感应，低延迟，适合绘画、笔记和精确操作。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 产品型号 -->
+        <section id="models" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">选择适合你的型号</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">多种配置选择，满足不同需求和预算</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 基础版 -->
+                    <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden transition-custom hover:shadow-xl border border-gray-100">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">TabPro 标准版</h3>
+                            <div class="text-3xl font-bold mb-6">¥2,999<span class="text-gray-500 text-lg font-normal">起</span></div>
+                            <div class="h-48 overflow-hidden rounded-xl mb-6">
+                                <img src="https://picsum.photos/id/20/400/300" alt="TabPro 标准版" class="w-full h-full object-cover transition-custom">
+                            </div>
+                            <ul class="text-left mb-8 space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>6.8英寸高清显示屏</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>八核处理器，4GB内存</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>64GB存储，支持扩展</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>5000mAh电池，10小时续航</span>
+                                </li>
+                                <li class="flex items-start text-gray-400">
+                                    <i class="fa fa-times text-gray-300 mt-1 mr-3"></i>
+                                    <span>不支持触控笔</span>
+                                </li>
+                            </ul>
+                            <a href="#buy" class="block w-full py-3 bg-gray-100 hover:bg-gray-200 text-dark font-medium rounded-xl transition-custom">
+                                选择此型号
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 专业版 -->
+                    <div class="product-card bg-white rounded-2xl shadow-xl overflow-hidden transition-custom hover:shadow-2xl border-2 border-primary transform md:-translate-y-4 relative z-10">
+                        <div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-sm font-medium">
+                            最受欢迎
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">TabPro 专业版</h3>
+                            <div class="text-3xl font-bold mb-6">¥4,599<span class="text-gray-500 text-lg font-normal">起</span></div>
+                            <div class="h-48 overflow-hidden rounded-xl mb-6">
+                                <img src="https://picsum.photos/id/119/400/300" alt="TabPro 专业版" class="w-full h-full object-cover transition-custom">
+                            </div>
+                            <ul class="text-left mb-8 space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>11英寸超高清显示屏</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>最新八核处理器，6GB内存</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>128GB/256GB存储选项</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>8000mAh电池，18小时续航</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>支持触控笔（需单独购买）</span>
+                                </li>
+                            </ul>
+                            <a href="#buy" class="block w-full py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-xl transition-custom shadow-lg">
+                                选择此型号
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 旗舰版 -->
+                    <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden transition-custom hover:shadow-xl border border-gray-100">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">TabPro 旗舰版</h3>
+                            <div class="text-3xl font-bold mb-6">¥6,999<span class="text-gray-500 text-lg font-normal">起</span></div>
+                            <div class="h-48 overflow-hidden rounded-xl mb-6">
+                                <img src="https://picsum.photos/id/96/400/300" alt="TabPro 旗舰版" class="w-full h-full object-cover transition-custom">
+                            </div>
+                            <ul class="text-left mb-8 space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>12.9英寸Mini LED显示屏</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>旗舰级处理器，8GB/12GB内存</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>256GB/512GB/1TB存储选项</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>10000mAh电池，24小时续航</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>含专业触控笔和键盘保护套</span>
+                                </li>
+                            </ul>
+                            <a href="#buy" class="block w-full py-3 bg-gray-100 hover:bg-gray-200 text-dark font-medium rounded-xl transition-custom">
+                                选择此型号
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 规格参数 -->
+        <section id="specs" class="py-16 md:py-24 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">详细规格参数</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">精湛工艺，卓越性能</p>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-white rounded-2xl shadow-lg">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="py-4 px-6 text-left text-gray-500 font-medium">规格</th>
+                                <th class="py-4 px-6 text-left text-gray-500 font-medium">标准版</th>
+                                <th class="py-4 px-6 text-left text-gray-500 font-medium">专业版</th>
+                                <th class="py-4 px-6 text-left text-gray-500 font-medium">旗舰版</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">显示屏</td>
+                                <td class="py-4 px-6">6.8英寸，1920x1080</td>
+                                <td class="py-4 px-6">11英寸，2560x1600，120Hz</td>
+                                <td class="py-4 px-6">12.9英寸，2732x2048，120Hz Mini LED</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">处理器</td>
+                                <td class="py-4 px-6">八核处理器</td>
+                                <td class="py-4 px-6">最新一代八核处理器</td>
+                                <td class="py-4 px-6">旗舰级八核处理器</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">内存</td>
+                                <td class="py-4 px-6">4GB</td>
+                                <td class="py-4 px-6">6GB</td>
+                                <td class="py-4 px-6">8GB/12GB</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">存储</td>
+                                <td class="py-4 px-6">64GB，支持扩展</td>
+                                <td class="py-4 px-6">128GB/256GB</td>
+                                <td class="py-4 px-6">256GB/512GB/1TB</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">后置摄像头</td>
+                                <td class="py-4 px-6">800万像素</td>
+                                <td class="py-4 px-6">1300万像素</td>
+                                <td class="py-4 px-6">1600万像素+1200万像素超广角</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">前置摄像头</td>
+                                <td class="py-4 px-6">500万像素</td>
+                                <td class="py-4 px-6">800万像素</td>
+                                <td class="py-4 px-6">1200万像素，支持自动对焦</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">电池</td>
+                                <td class="py-4 px-6">5000mAh，10小时续航</td>
+                                <td class="py-4 px-6">8000mAh，18小时续航</td>
+                                <td class="py-4 px-6">10000mAh，24小时续航</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">充电</td>
+                                <td class="py-4 px-6">18W快充</td>
+                                <td class="py-4 px-6">30W快充</td>
+                                <td class="py-4 px-6">45W快充，支持无线充电</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">连接</td>
+                                <td class="py-4 px-6">Wi-Fi 5，蓝牙5.0</td>
+                                <td class="py-4 px-6">Wi-Fi 6，蓝牙5.2，可选5G</td>
+                                <td class="py-4 px-6">Wi-Fi 6E，蓝牙5.2，5G</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 用户评价 -->
+        <section id="reviews" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">用户怎么说</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">来自真实用户的使用体验和评价</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 评价1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-custom">
+                        <div class="flex items-center mb-4">
+                            <img src="https://picsum.photos/id/64/100/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold">张先生</h4>
+                                <div class="flex text-yellow-400">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">专业版的屏幕显示效果非常出色，无论是看电影还是处理文档都很舒服。电池续航也超出预期，充满电可以用一整天，非常适合我这种经常出差的人。</p>
+                        <p class="text-gray-500 text-sm mt-4">购买了 TabPro 专业版 · 2个月前</p>
+                    </div>
+                    
+                    <!-- 评价2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-custom">
+                        <div class="flex items-center mb-4">
+                            <img src="https://picsum.photos/id/65/100/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold">李女士</h4>
+                                <div class="flex text-yellow-400">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">作为一名设计师，我非常喜欢旗舰版的绘图体验，触控笔的压感和延迟控制得很好，几乎和专业绘图板一样。唯一的小缺点是价格有点高，但考虑到性能还是值得的。</p>
+                        <p class="text-gray-500 text-sm mt-4">购买了 TabPro 旗舰版 · 1个月前</p>
+                    </div>
+                    
+                    <!-- 评价3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-custom">
+                        <div class="flex items-center mb-4">
+                            <img src="https://picsum.photos/id/91/100/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold">王先生</h4>
+                                <div class="flex text-yellow-400">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">标准版的性价比很高，给孩子上网课用足够了。系统流畅，家长控制功能也很实用，可以限制使用时间和内容。续航不错，充一次电可以用两天左右。</p>
+                        <p class="text-gray-500 text-sm mt-4">购买了 TabPro 标准版 · 3个月前</p>
+                    </div>
+                </div>
+                
+                <!-- 统计数据 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 text-center">
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-primary mb-2">98%</div>
+                        <p class="text-gray-600">用户满意度</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-primary mb-2">200万+</div>
+                        <p class="text-gray-600">全球用户</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-primary mb-2">12项</div>
+                        <p class="text-gray-600">国际奖项</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-primary mb-2">24/7</div>
+                        <p class="text-gray-600">客户支持</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 购买区域 -->
+        <section id="buy" class="py-16 md:py-24 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+                        <!-- 左侧图片 -->
+                        <div class="w-full lg:w-1/2 bg-primary/5 p-8 flex items-center justify-center">
+                            <img src="https://picsum.photos/id/160/600/600" alt="TabPro 专业版展示" class="max-w-full h-auto rounded-2xl shadow-lg">
+                        </div>
+                        
+                        <!-- 右侧购买表单 -->
+                        <div class="w-full lg:w-1/2 p-8 md:p-12">
+                            <h2 class="text-2xl md:text-3xl font-bold mb-6">立即购买 TabPro</h2>
+                            <p class="text-gray-600 mb-8">选择你的配置，享受优惠价格</p>
+                            
+                            <form>
+                                <!-- 型号选择 -->
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">选择型号</label>
+                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom">
+                                        <option>TabPro 标准版 - ¥2,999</option>
+                                        <option selected>TabPro 专业版 - ¥4,599</option>
+                                        <option>TabPro 旗舰版 - ¥6,999</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- 存储选择 -->
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">存储容量</label>
+                                    <div class="flex flex-wrap gap-3">
+                                        <label class="inline-flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:border-primary transition-custom">
+                                            <input type="radio" name="storage" class="mr-2 text-primary">
+                                            <span>128GB</span>
+                                        </label>
+                                        <label class="inline-flex items-center p-3 border border-primary bg-primary/5 rounded-xl cursor-pointer transition-custom">
+                                            <input type="radio" name="storage" class="mr-2 text-primary" checked>
+                                            <span>256GB</span>
+                                        </label>
+                                        <label class="inline-flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:border-primary transition-custom">
+                                            <input type="radio" name="storage" class="mr-2 text-primary">
+                                            <span>512GB</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- 配件选择 -->
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">可选配件</label>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:border-primary transition-custom">
+                                            <input type="checkbox" class="mr-3 text-primary">
+                                            <span>触控笔 - ¥599</span>
+                                        </label>
+                                        <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:border-primary transition-custom">
+                                            <input type="checkbox" class="mr-3 text-primary" checked>
+                                            <span>键盘保护套 - ¥799</span>
+                                        </label>
+                                        <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:border-primary transition-custom">
+                                            <input type="checkbox" class="mr-3 text-primary">
+                                            <span>便携支架 - ¥299</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- 颜色选择 -->
+                                <div class="mb-8">
+                                    <label class="block text-gray-700 font-medium mb-2">选择颜色</label>
+                                    <div class="flex gap-4">
+                                        <button type="button" class="w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-300 focus:border-primary focus:outline-none transition-custom"></button>
+                                        <button type="button" class="w-10 h-10 rounded-full bg-white border-2 border-primary focus:outline-none transition-custom"></button>
+                                        <button type="button" class="w-10 h-10 rounded-full bg-blue-500 border-2 border-gray-300 focus:border-primary focus:outline-none transition-custom"></button>
+                                        <button type="button" class="w-10 h-10 rounded-full bg-green-500 border-2 border-gray-300 focus:border-primary focus:outline-none transition-custom"></button>
+                                    </div>
+                                </div>
+                                
+                                <!-- 价格和按钮 -->
+                                <div class="border-t border-gray-200 pt-6">
+                                    <div class="flex justify-between mb-6">
+                                        <span class="text-gray-600">总价</span>
+                                        <span class="text-2xl font-bold">¥5,398</span>
+                                    </div>
+                                    <button type="button" class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-xl transition-custom shadow-lg hover:shadow-xl mb-4 flex items-center justify-center">
+                                        <i class="fa fa-shopping-cart mr-2"></i>
+                                        加入购物车
+                                    </button>
+                                    <button type="button" class="w-full py-4 bg-accent hover:bg-accent/90 text-white font-medium rounded-xl transition-custom shadow-md hover:shadow-lg flex items-center justify-center">
+                                        <i class="fa fa-bolt mr-2"></i>
+                                        立即购买，快速送达
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 常见问题 -->
+        <section id="faq" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">常见问题</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我们收集了用户最常问的问题，如果有其他疑问，请联系我们的客服</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <!-- 问题1 -->
+                    <div class="border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left bg-white hover:bg-gray-50 transition-custom focus:outline-none">
+                            <span class="font-medium">TabPro 支持哪些操作系统？</span>
+                            <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            TabPro 全系列产品均搭载最新版的操作系统，支持定期系统更新。专业版和旗舰版还支持多用户模式和电脑模式，可以连接外部显示器实现类似电脑的操作体验。
+                        </div>
+                    </div>
+                    
+                    <!-- 问题2 -->
+                    <div class="border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left bg-white hover:bg-gray-50 transition-custom focus:outline-none">
+                            <span class="font-medium">购买后可以享受哪些售后服务？</span>
+                            <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            所有 TabPro 产品均提供两年官方质保服务，支持全国联保。购买后30天内如无质量问题但不满意，可享受无理由退换服务。我们还提供7×24小时在线客服支持和专业的技术咨询服务。
+                        </div>
+                    </div>
+                    
+                    <!-- 问题3 -->
+                    <div class="border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left bg-white hover:bg-gray-50 transition-custom focus:outline-none">
+                            <span class="font-medium">TabPro 可以使用多久？电池寿命如何？</span>
+                            <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            正常使用情况下，TabPro 可以使用3-5年。电池设计寿命为充放电循环1000次以上，约合2-3年。当电池容量低于80%时，建议更换电池以获得最佳体验，我们提供官方电池更换服务。
+                        </div>
+                    </div>
+                    
+                    <!-- 问题4 -->
+                    <div class="border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left bg-white hover:bg-gray-50 transition-custom focus:outline-none">
+                            <span class="font-medium">不同型号之间有什么主要区别？应该如何选择？</span>
+                            <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            标准版适合基础使用，如网页浏览、视频观看和简单办公；专业版适合需要更高性能的用户，如设计师、程序员和学生；旗舰版则面向专业创作者和追求极致体验的用户，提供最佳的屏幕、性能和配件支持。选择时可根据预算和使用需求决定。
+                        </div>
+                    </div>
+                    
+                    <!-- 问题5 -->
+                    <div class="border border-gray-200 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left bg-white hover:bg-gray-50 transition-custom focus:outline-none">
+                            <span class="font-medium">是否支持外接设备和扩展功能？</span>
+                            <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            是的，TabPro 专业版和旗舰版支持通过Type-C接口外接显示器、键盘、鼠标等设备，实现类似电脑的工作环境。同时支持云存储服务和外接存储设备，满足扩展需求。专业版和旗舰版还支持连接打印机、投影仪等办公设备。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 联系和订阅 -->
+        <section class="py-16 md:py-24 gradient-bg text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">获取最新资讯和优惠</h2>
+                    <p class="mb-8 opacity-90 max-w-2xl mx-auto">订阅我们的邮件，第一时间获取产品更新、独家优惠和使用技巧</p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto mb-12">
+                        <input type="email" placeholder="输入你的邮箱地址" class="flex-1 px-6 py-4 rounded-full text-dark focus:outline-none focus:ring-2 focus:ring-white">
+                        <button type="button" class="px-8 py-4 bg-dark hover:bg-opacity-90 text-white font-medium rounded-full transition-custom shadow-lg hover:shadow-xl whitespace-nowrap">
+                            立即订阅
+                        </button>
+                    </form>
+                    
+                    <div class="flex flex-wrap justify-center gap-6">
+                        <a href="#" class="text-white hover:text-gray-200 transition-custom">
+                            <i class="fa fa-weibo text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-gray-200 transition-custom">
+                            <i class="fa fa-wechat text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-gray-200 transition-custom">
+                            <i class="fa fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-gray-200 transition-custom">
+                            <i class="fa fa-youtube-play text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-gray-200 transition-custom">
+                            <i class="fa fa-twitter text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- 公司信息 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <span class="text-primary text-2xl"><i class="fa fa-tablet"></i></span>
+                        <span class="text-xl font-bold">TabPro</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">重新定义平板体验，为你的生活和工作带来更多可能。</p>
+                    <p class="text-gray-500 text-sm">© 2023 TabPro. 保留所有权利。</p>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-custom">产品特性</a></li>
+                        <li><a href="#models" class="text-gray-400 hover:text-white transition-custom">产品型号</a></li>
+                        <li><a href="#specs" class="text-gray-400 hover:text-white transition-custom">技术规格</a></li>
+                        <li><a href="#reviews" class="text-gray-400 hover:text-white transition-custom">用户评价</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-white transition-custom">常见问题</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 支持 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">客户支持</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">联系我们</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">保修政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">维修服务</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">使用手册</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">下载中心</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系信息 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">北京市朝阳区科技园区88号</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">400-888-8888</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">support@tabpro.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-clock-o text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">周一至周日 9:00-21:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">隐私政策 | 使用条款 | 网站地图</p>
+                <p class="text-gray-500 text-sm">设计与开发 © 2023 TabPro</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary/90 transition-custom opacity-0 invisible">
+        <i class="fa fa-chevron-up"></i>
+    </button>
+    
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2', 'shadow');
+            }
+        });
+        
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // FAQ 折叠功能
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+                
+                // 关闭其他打开的FAQ
+                faqToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        const otherContent = otherToggle.nextElementSibling;
+                        const otherIcon = otherToggle.querySelector('i');
+                        
+                        otherContent.classList.add('hidden');
+                        otherIcon.classList.remove('rotate-180');
+                    }
+                });
+            });
+        });
+        
+        // 点击导航链接关闭移动菜单
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // 图片懒加载
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyImages = [].slice.call(document.querySelectorAll("img"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src || lazyImage.src;
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
